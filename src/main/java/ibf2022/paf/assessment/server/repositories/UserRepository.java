@@ -1,7 +1,5 @@
 package ibf2022.paf.assessment.server.repositories;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,13 +26,14 @@ public class UserRepository {
         // List<User> Users = jdbcTemplate.query(findByUsernameSQL, rowMapper, username);
         SqlRowSet rs = jdbcTemplate.queryForRowSet(findByUsernameSQL, username);
 
-        User user = new User();
+        if(!rs.next()){
+            return Optional.empty(); 
+        }
 
-        while (rs.next()){ 
+        User user = new User();
         user.setUserId(rs.getString("userId")); 
         user.setUsername(rs.getString("username")); 
         user.setName(rs.getString("name")); 
-        }
         
         return Optional.of(user);
     }
