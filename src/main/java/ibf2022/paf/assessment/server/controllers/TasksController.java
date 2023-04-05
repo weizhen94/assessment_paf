@@ -33,11 +33,12 @@ public class TasksController {
 
         int taskCount = 0;
         for (int i = 0; form.containsKey("description-" + i); i++) {
+            
             String description = form.getFirst("description-" + i);
             Integer priority = Integer.parseInt(form.getFirst("priority-" + i));
-
             String dueDateString = form.getFirst("dueDate-" + i);
             Date dueDate;
+
             try {
                 dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(dueDateString);
             } catch (ParseException e) {
