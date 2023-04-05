@@ -31,7 +31,7 @@ public class UserRepository {
         }
 
         User user = new User();
-        user.setUserId(rs.getString("userId")); 
+        user.setUserId(rs.getString("user_id")); 
         user.setUsername(rs.getString("username")); 
         user.setName(rs.getString("name")); 
         
