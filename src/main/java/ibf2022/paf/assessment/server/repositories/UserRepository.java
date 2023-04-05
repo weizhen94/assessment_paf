@@ -19,11 +19,9 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     public Optional<User> findUserByUsername(String username){
-        // List<User> userList = new LinkedList<>();
+
         String findByUsernameSQL = "select * from user where username = ?";
 
-        // BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        // List<User> Users = jdbcTemplate.query(findByUsernameSQL, rowMapper, username);
         SqlRowSet rs = jdbcTemplate.queryForRowSet(findByUsernameSQL, username);
 
         if(!rs.next()){
