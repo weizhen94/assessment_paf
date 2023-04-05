@@ -28,15 +28,15 @@ public class TasksController {
     private TodoService todoService; 
 
     @PostMapping(path="/task", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ModelAndView submitForm(@RequestBody MultiValueMap<String, String> form, Model model){
-        String username = form.getFirst("username"); 
+    public ModelAndView submitForm(@RequestBody MultiValueMap<String, String> formInputs, Model model){
+        String username = formInputs.getFirst("username"); 
 
-        int taskCount = 0;
-        for (int i = 0; form.containsKey("description-" + i); i++) {
-            
-            String description = form.getFirst("description-" + i);
-            Integer priority = Integer.parseInt(form.getFirst("priority-" + i));
-            String dueDateString = form.getFirst("dueDate-" + i);
+        int arrayCount = 0;
+        for (int i = 0; formInputs.containsKey("description-" + i); i++) {
+
+            String description = formInputs.getFirst("description-" + i);
+            Integer priority = Integer.parseInt(formInputs.getFirst("priority-" + i));
+            String dueDateString = formInputs.getFirst("dueDate-" + i);
             Date dueDate;
 
             try {
@@ -55,13 +55,13 @@ public class TasksController {
 
             try {
                 todoService.upsertTask(user, task);
-                taskCount++;
+                arrayCount++;
             } catch (Exception e) {
                 return new ModelAndView("error", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
 
-        model.addAttribute("taskCount", taskCount);
+        model.addAttribute("taskCount", arrayCount);
         model.addAttribute("username", username);
         return new ModelAndView("result", model.asMap(), HttpStatus.OK);
     }
